@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启注解扫描-->
+    <context:component-scan base-package="com.itboy"></context:component-scan>
+
+    <!--视图解析器-->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!-- 设置静态资源不过滤 -->
+    <!--1. location元素表示webapp目录下的包下的所有文件-->
+    <!--2. mapping元素表示以/static开头的所有请求路径，如/static/a 或者/static/a/b-->
+    <mvc:resources location="/css/" mapping="/css/**"/> <!-- 样式 -->
+    <mvc:resources location="/images/" mapping="/images/**"/> <!-- 图片 -->
+    <mvc:resources location="/js/" mapping="/js/**"/> <!-- javascript -->
+    <!-- 配置文件解析器对象，要求id名称必须是multipartResolver -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+       <!--配置上传文件大小10MB*1024*1024-->
+        <property name="maxUploadSize" value="10485760"/>
+    </bean>
+    <!--开启注解支持-->
+    <mvc:annotation-driven ></mvc:annotation-driven>
+</beans>
